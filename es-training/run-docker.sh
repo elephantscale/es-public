@@ -15,6 +15,8 @@ done
 shift "$(($OPTIND -1))"
 cmd="$@"
 
+echo "Starting docker image : ${docker_image} ..."
+
 working_dir=$(pwd -P)
 
 ## Port mappings  (host --> docker)
