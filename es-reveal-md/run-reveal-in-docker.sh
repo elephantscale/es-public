@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## This is the master copy.
+## If any changes are made, also copy it into `es-public/es-reveal-md' 
+
 ## invoke with '-d' for dev mode
 ## this will mount utils directory from host for live debugging
 
@@ -17,18 +20,15 @@ while getopts 'dp:' OPTION; do
 done
 shift "$(($OPTIND -1))"
 
-
-if [ -z "$1" ] ; then
-    echo "Usage:  $0    [-d ]  [-p port_number]  <image name>    [optional command]"
-    echo "Missing Docker image id.  exiting"
-    exit -1
+docker_image="elephantscale/es-reveal-md:prod"
+if [ "$1" ] ; then 
+	docker_image=$1
 fi
 
+echo "starting docker image : $docker_image"
 
-image_id="$1"
 
-
-# mount the current directory at /home/jovyan/dev
+# mount the current directory at /home/jovyan/work
 me="${BASH_SOURCE-$0}"
 mydir=$(cd -P -- "$(dirname -- "$me")" && pwd -P)
 #mydir=$(realpath $(dirname -- "$me"))
@@ -50,12 +50,12 @@ if [ "$found_es_utils" = "yes" -a "${dev_mode}" = "yes" ] ; then
         -p $port:$port -p 35729:35729 \
         -v"$working_dir:/home/ubuntu/dev" \
         -v"$utils_dir:/home/ubuntu/utils" \
-        "$image_id" -d -p $port $@
+        "$docker_image" -d -p $port $@
 else
     echo "DEV_MODE=off."
     docker run -it   \
         --shm-size=1gb  \
         -p $port:$port  -p 35729:35729 \
         -v"$working_dir:/home/ubuntu/dev" \
-        "$image_id"   -p $port $@
+        "$docker_image"   -p $port $@
 fi
