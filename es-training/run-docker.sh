@@ -15,7 +15,12 @@ done
 shift "$(($OPTIND -1))"
 cmd="$@"
 
+echo "Starting docker image : ${docker_image} ..."
+
 working_dir=$(pwd -P)
+
+## Change this to where ever you have data
+data_dir="$HOME/datasets"
 
 ## Port mappings  (host --> docker)
 ##    80   : landing page / noVNC
@@ -36,8 +41,8 @@ working_dir=$(pwd -P)
 
 docker run -it   \
     -v "$working_dir:/home/ubuntu/dev" \
-    -v $HOME/datasets:/data \
-    -v $HOME/datasets:/home/ubuntu/data \
+    -v "$data_dir:/data" \
+    -v "$data_dir:/home/ubuntu/data" \
     -p 80:80 \
     -p 2181:2181 \
     -p 2222:22 \
