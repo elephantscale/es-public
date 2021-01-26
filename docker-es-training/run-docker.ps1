@@ -2,7 +2,7 @@
 param(
     [Parameter(Mandatory=$false, Position=0)]
     [String]
-    $image="elephantscale/es-training:prod",
+    $image="elephantscale/es-training:prod2",
 
     [Parameter(Mandatory=$false, Position=1)]
     [String]

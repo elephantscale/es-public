@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker_image='elephantscale/es-training:prod'
+docker_image='elephantscale/es-training:prod2'
 password='bingobob123'
 while getopts 'i:p:' OPTION; do
   case "$OPTION" in
